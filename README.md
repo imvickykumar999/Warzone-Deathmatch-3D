@@ -2,6 +2,10 @@
 
 A browser-based 3D multiplayer deathmatch game. The browser renders the arena and sends gameplay packets through a WebSocket bridge. The bridge forwards those packets to the Python TCP game server.
 
+<img width="1535" height="985" alt="image" src="https://github.com/user-attachments/assets/3ce9ddf4-3bfa-4aa3-83b4-429a14fae2ea" />
+<img width="1535" height="983" alt="image" src="https://github.com/user-attachments/assets/ec0cc23a-1548-4bc3-a075-6598523b1a64" />
+<img width="1535" height="985" alt="image" src="https://github.com/user-attachments/assets/474e3bba-a340-441f-8f55-cde6a5d4e8dc" />
+
 ## How The Pieces Connect
 
 ```text
