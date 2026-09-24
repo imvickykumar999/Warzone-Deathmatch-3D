@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Ursina TCP Deathmatch</title>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Lobby Music (Auto-plays or unlocks on first interaction) -->
+  <audio id="lobby-music" src="assets/music.mp3" loop preload="auto"></audio>
+
+  <!-- Sound Effect for Gunfire -->
+  <audio id="bullet-audio" src="assets/bullet.mp3" preload="auto"></audio>
+
+  <!-- SCREEN 1: Launcher / Connect Modal (Exact Replica of Tkinter get_user_input) -->
+  <section id="connect-screen">
+    <div id="launcher-frame">
+      <h2 class="launcher-label">Enter your username:</h2>
+      <div class="input-wrap">
+        <input id="username" list="color-options" autocomplete="off" spellcheck="false" maxlength="20">
+        <datalist id="color-options">
+          <option value="Blue">
+          <option value="Green">
+          <option value="Orange">
+          <option value="Purple">
+          <option value="Yellow">
+          <option value="Red">
+          <option value="Turquoise">
+          <option value="Pink">
+          <option value="Cyan">
+          <option value="Lime">
+        </datalist>
+      </div>
+      <div id="color-indicator">● Player Color: Blue</div>
+
+      <h2 class="launcher-label" style="margin-top: 18px;">Enter server address:</h2>
+      <div class="input-wrap">
+        <input id="server" list="server-options" autocomplete="off" spellcheck="false">
+        <datalist id="server-options">
+          <option value="game.24x7stream.shop">Public Default (game.24x7stream.shop)</option>
+          <option value="100.121.132.98">Tailscale IP (100.121.132.98)</option>
+          <option value="192.168.1.2">Local LAN IP (192.168.1.2)</option>
+          <option value="127.0.0.1">Localhost (127.0.0.1)</option>
+        </datalist>
+      </div>
+      <div id="ts-hint">Tailscale IP: 100.121.132.98</div>
+
+      <h2 class="launcher-label" style="margin-top: 14px;">Enter port number:</h2>
+      <div class="input-wrap">
+        <input id="port" type="number" value="8888" min="1" max="65535">
+      </div>
+
+      <!-- Advanced / Bridge options (Auto-configured by default) -->
+      <details id="bridge-options-toggle">
+        <summary>Advanced Bridge Options</summary>
+        <div style="margin-top: 8px;">
+          <label style="font-size: 13px; color: lightblue;">WebSocket Bridge:</label>
+          <input id="bridge" style="font-size: 14px; padding: 6px 10px; width: 100%; margin-top: 4px;" value="ws://localhost:8765">
+        </div>
+      </details>
+
+      <div id="connect-error" role="alert"></div>
+
+      <!-- Action Buttons matching Tkinter layout -->
+      <div class="button-row">
+        <button id="btn-close" type="button">Close</button>
+        <button id="btn-play" type="button">Play</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: In-Game 3D Playable Screen -->
+  <section id="game-screen" hidden>
+    <canvas id="game-canvas"></canvas>
+
+    <!-- Center Reticle / Crosshair (Ursina color rgba(255, 0, 0, 122)) -->
+    <div id="crosshair"></div>
+
+    <!-- In-Game Ursina HUD (Top Center) -->
+    <div id="hud-top">
+      <div id="healthbar-container">
+        <div id="healthbar-fill"></div>
+      </div>
+      <div id="health-text">250 / 250 HP</div>
+      <div id="ammo-text">15 / 15</div>
+      <div id="reload-text" hidden>Reloading... 2.0s</div>
+    </div>
+
+    <!-- Quick Controls Notice -->
+    <div id="hud-controls-hint">
+      [WASD] Move &nbsp;|&nbsp; [MOUSE] Aim &nbsp;|&nbsp; [C] Zoom Aim &nbsp;|&nbsp; [LMB] Fire &nbsp;|&nbsp; [SPACE] Jump &nbsp;|&nbsp; [R / E] Reload &nbsp;|&nbsp; [ESC] Release Mouse
+    </div>
+
+    <!-- Top Right Fullscreen & Audio Controls -->
+    <div id="top-bar-controls">
+      <button id="audio-toggle-button" title="Toggle Music">🎵</button>
+      <button id="fullscreen-button" title="Toggle Fullscreen">⛶ Fullscreen</button>
+    </div>
+
+    <!-- In-Game Death Screen Overlay (Exact Replica of Ursina Player.death) -->
+    <div id="death-screen" hidden>
+      <div id="death-content">
+        <h1 id="death-title">YOU DIED</h1>
+        <p id="death-subtitle">Press [R] or [SPACE] to Respawn &nbsp;|&nbsp; [ESC] to Exit</p>
+        <button id="respawn-button" type="button">RESPAWN</button>
+        <div id="timer-text">Auto-respawn in 5s...</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Game Logic via ES Module -->
+  <script type="module" src="game.js"></script>
+</body>
+</html>
