@@ -1,0 +1,6 @@
+{
+  "name": "24x7 Play",
+  "description": "Browser-based 3D multiplayer deathmatch gaming portal with fullscreen immersive mode, low-latency audio, and gaming controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
